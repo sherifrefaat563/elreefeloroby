@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>El Reef El Oroby </title>
+    <style>
+
+body {
+      margin: 0;
+      padding-bottom: 50px; /* Create space at the bottom for the buttons */
+    }
+
+    .button-container {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      background-color: #0b4905;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .gallery {
+        position:relative;
+        image-orientation: flip;
+        }
+      
+    img {
+      max-width: 100%;
+      max-height: 70%;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      
+    }
+    h1{
+        text-align: center;
+        color:darkviolet
+    }   
+    </style>
+</head>
+<body>
+    <h1>Raheem Farm - مزارع رحيم </h1>
+<!-- Your page content here -->
+<img id="photo" src="images/sawsan1.jpg" alt="Photo">
+
+<div class="button-container">
+  <button id="backwardButton">Backward</button>
+  <button id="forwardButton">Forward</button>
+</div>
+
+<script>
+            var photos = [
+              "images/sawsan1.jpg",
+              "images/sawsan2.jpg",
+              "images/sawsan6.jpg",
+              "images/sawsan4.jpg",
+              "images/sawsan7.jpg",
+              "images/sawsan9.jpeg",
+              "images/sawsan10.jpeg",
+              "images/sawsan11.jpeg",
+            
+              // Add more photo paths as needed
+            ];
+        
+            var currentPhotoIndex = 0;
+            var photoElement = document.getElementById("photo");
+            var backwardButton = document.getElementById("backwardButton");
+            var forwardButton = document.getElementById("forwardButton");
+        
+            function showCurrentPhoto() {
+              photoElement.src = photos[currentPhotoIndex];
+            }
+        
+            function navigateForward() {
+              currentPhotoIndex++;
+              if (currentPhotoIndex >= photos.length) {
+                currentPhotoIndex = 0;
+              }
+              showCurrentPhoto();
+            }
+        
+            function navigateBackward() {
+              currentPhotoIndex--;
+              if (currentPhotoIndex < 0) {
+                currentPhotoIndex = photos.length - 1;
+              }
+              showCurrentPhoto();
+            }
+        
+            backwardButton.addEventListener("click", navigateBackward);
+            forwardButton.addEventListener("click", navigateForward);
+        
+            // Show the initial photo
+            showCurrentPhoto();
+    </script>
+</body>
+</html>

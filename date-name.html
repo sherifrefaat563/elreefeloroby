@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date Display</title>
+  <script>
+    function displayDate() {
+      var currentDate = new Date();
+      var day = getDayName(currentDate.getDay());
+      var month = getMonthName(currentDate.getMonth());
+      var date = currentDate.getDate();
+      var year = currentDate.getFullYear();
+
+      // Format the date
+      var formattedDate = day + ", " + month + " " + date + ", " + year;
+
+      // Display the date on the web page
+      document.getElementById("date").textContent = formattedDate;
+    }
+
+    function getDayName(dayIndex) {
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return days[dayIndex];
+    }
+
+    function getMonthName(monthIndex) {
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      return months[monthIndex];
+    }
+  </script>
+</head>
+<body onload="displayDate()">
+  <h1>Date Display</h1>
+  <p id="date"></p>
+</body>
+</html>

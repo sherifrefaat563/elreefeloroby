@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prayer Times</title>
+  <style>
+    .prayer-time {
+      font-family: "Courier New", monospace;
+      font-size: 24px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function fetchPrayerTimes() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://api.aladhan.com/v1/timingsByCity?city=your_city&country=your_country&method=1', true);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          var prayerTimes = response.data.timings;
+
+          displayPrayerTimes(prayerTimes);
+        }
+      };
+
+      xhr.send();
+    }
+
+    function displayPrayerTimes(prayerTimes) {
+      document.getElementById("fajr").textContent = "Fajr: " + prayerTimes.Fajr;
+      document.getElementById("dhuhr").textContent = "Dhuhr: " + prayerTimes.Dhuhr;
+      document.getElementById("asr").textContent = "Asr: " + prayerTimes.Asr;
+      document.getElementById("maghrib").textContent = "Maghrib: " + prayerTimes.Maghrib;
+      document.getElementById("isha").textContent = "Isha: " + prayerTimes.Isha;
+    }
+  </script>
+</head>
+<body onload="fetchPrayerTimes()">
+  <h1>Prayer Times</h1>
+  <table>
+    <tr>
+      <th>Prayer</th>
+      <th>Time</th>
+    </tr>
+    <tr>
+      <td>Fajr</td>
+      <td class="prayer-time" id="fajr"></td>
+    </tr>
+    <tr>
+      <td>Dhuhr</td>
+      <td class="prayer-time" id="dhuhr"></td>
+    </tr>
+    <tr>
+      <td>Asr</td>
+      <td class="prayer-time" id="asr"></td>
+    </tr>
+    <tr>
+      <td>Maghrib</td>
+      <td class="prayer-time" id="maghrib"></td>
+    </tr>
+    <tr>
+      <td>Isha</td>
+      <td class="prayer-time" id="isha"></td>
+    </tr>
+  </table>
+</body>
+</html>

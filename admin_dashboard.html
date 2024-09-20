@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="eng"   dir="ltr">
+<html>
+<head>
+  <!link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css') }}">
+  <meta charset="utf-8"> 
+  <title>{{session['username']}} Dashboard</title>
+<style>
+  h2{
+    color:darkgreen;
+    font-weight:bolder;
+    text-decoration: underline;
+    }
+  </style>
+  </head>
+
+<body>
+    {% extends "template.html" %}
+    {% block content %}
+    <button onclick="goBack()" class="button">Back</button>
+    <a href="/" class="btn btn-success" role="button" data-bs-toggle="button">Home page</a>
+    <div class="container">
+    <ul class="nav flex-column">
+        <h2>Welcome, {{session['username']}} !</h2>
+        <h2>What would you like to do?</h2>
+      <ul>
+          <li><class="nav-item">
+            <a class="nav-link active" href="{{ url_for('cart_items_list') }}">Show Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('prod_list') }}">Show Market Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add_product') }}">Add items to market</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add_supplier') }}">Add supplier</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('suppliers_list') }}">Suppliers list</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add_user') }}">Add user</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users_list') }}">Users list</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+      </ul>
+    </nav>
+  </div>
+    <br><br><br>
+    {% endblock %}
+  </body>
+</html>
