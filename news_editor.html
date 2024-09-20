@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Text editor</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Local news page</title>
+<style>
+
+  input {
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    font-size:large;
+    color: blue;
+  }
+  col {
+    color:blue;
+  }
+  textarea {
+    resize: none;
+    width: 100%;
+    height: 150px;
+  }
+  h2{
+    color:darkgreen;
+    text-decoration:double;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+  }
+  h4{
+    color:darkgreen;
+    text-align:left;
+  }
+  .user-paragraph {
+    margin-bottom: 10px;
+        }
+</style>
+
+<script src="{{ url_for('static', filename='script9.js') }}"></script>
+
+<script>
+function clearForm() {
+  document.getElementById("myForm").reset();
+}
+function printDateTime() {
+  var currentDate = new Date();
+  var dateTimeElement = document.getElementById("datetime");
+  dateTimeElement.innerHTML = currentDate.toLocaleString();
+}
+</script>
+
+</head>
+<body>
+    {% extends "template.html" %}
+    {% block content %}
+  
+ <title>Text Entry Page</title>
+    </head>
+ <body>
+    <div class="container">
+      <h2>{ ----  Local news page  ----}</h2>
+      <hr>
+      <button onclick="goBack()" class="button">Back</button>
+        <form   action="update_news"   method="POST">
+          <strong>&copy<input type="text" name="name"  id="name"  value="{{session['username']}}"></strong>
+          <inpt type="text"  name="name" value="text"> 
+                    &nbsp <br>
+          <textarea   name="content"    id="content"     required size="150px"></textarea>
+                <br>
+          <button type="submit" class="btn btn-warning" onclick="clearForm()">Send &nbsp;</button>
+        </form>
+    </div>
+     {% endblock %}
+</body>
+</html>

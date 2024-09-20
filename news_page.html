@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Local news page</title>
+<style>
+    h6{
+    color:blue;
+    text-decoration: underline;
+}
+h2{
+    color:yellow;
+    text-align: center;
+    background-color: darkgreen;
+    font-style: italic;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: 800;
+}
+</style>
+
+<script src="{{ url_for('static', filename='script9.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script>
+    function displayHomePage(){
+    window.location.href="index.html";
+    }
+  function goBack() {
+      window.history.back();
+    }
+ 
+</script>
+</head>
+        
+<body>
+{% extends 'template.html'%}
+{% block content %}
+    <h2>News  &nbsp page</h2>
+    <div class="container">
+        &nbsp&nbsp&nbsp&nbsp&nbsp
+        <button onclick="goBack()" class="button">Back</button>
+        <a class="btn btn-success btn-sm" href="/"           role="button">Home page</a>
+        <a class="btn btn-primary btn-sm" href="news_editor" role="button" onclick="displayHomePage">Add news</a>
+        <a class="btn btn-danger btn-sm"  href="login"       role="button">login</a>
+        
+        &nbsp&nbsp
+        <hr>
+        <ul>
+            {% for row in rows %}
+               <h6> <li>&copy{{ row[1] + '/@' + row[2]}}</h6></li>
+                <li>{{ row[0] }}</li></p>
+                <hr>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock %}
+</body>
+</html>   

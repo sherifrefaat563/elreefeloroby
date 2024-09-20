@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <title> elreef eloroby Community </title>
+<head>    
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/thabit.css">
+  <link rel="stylesheet" href="http://www.fontstatic.com/f=jazeera,jazeera-light">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/amiri.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<style>
+@import url("http://www.fontstatic.com/f=jazeera,jazeera-light");
+.grid{
+            display: contents;
+            display: grid;
+            grid-gap: 10px;
+           
+        }
+    .grid-item-1 {
+            grid-column: 1;
+            width: 100%;
+            font-size:medium;
+            padding: 5px;
+            text-align: left;
+    }
+    .grid-item-2 {
+            grid-column: 2;
+            width:100%;
+            /*background-color: darkmagenta; */             
+    }
+    .grid-item-3 {
+            grid-column: 3;
+            width:100%;
+            direction:rtl;
+         /*  align-items: left; */
+    }
+    .grid-container {
+            display: grid;
+            /*grid-template-columns: 1fr 2fr 1fr; /* Adjust the number of columns as needed */
+            grid-gap: 3px; /* Adjust the gap between grid items as needed */
+            }
+   .grid-item {
+            display: flex;
+            flex-direction: column; 
+            text-align: center;
+            /*color: rgba(5, 48, 15, 0.84);
+            margin-right: 20px;*/
+            margin-top:20px;
+            border: .2px silver red;  
+            padding:20px;
+        }
+    .grid-1 {
+            display:grid;
+            grid-template-columns: repeat(4, 1fr); /* Adjust the nber of columns as needed */
+            grid-gap: 0%; /* Adjust the gap between grid items */
+            }
+    h1,h2{
+        font-style:normal;
+        text-align: center;
+        color:gold;
+        /*font-family:'Amiri', serif;*/
+        /*font-family: 'jazeera';*/
+        font-family: 'thabit';
+        
+        /*font-family: 'jazeera-light';*/
+         } 
+    h3, h4, h5{
+        /*text-decoration: underline;*/
+        font-family: 'jazeera-light';
+      }            
+    .date{
+        background-color:darkmagenta ;
+        color: white;
+    }
+    .time{
+        /*background-color: crimson;*/
+        color: darkgreen;
+        font-weight: bolder;
+    }
+    th{
+        background-color:darkgreen;
+        color:antiquewhite
+    }
+    .prayer-time {
+      font-family: "Courier New", monospace;
+      font-size: 20px;
+      direction:rtl    ;
+      color: blue;
+    }
+    y{
+        color:blue;
+        background-color: ;
+        font-size: large;
+    }
+    .card-title{
+      text-align: center;
+      color: blue;
+      background-color: lightblue;
+    }
+    .list-group-item {
+      text-align: right;
+    } 
+    .list-group {
+      text-align: center;
+      background-color:0;
+      font-style: normal;
+      font-weight: 800;
+    } 
+    .card-body{
+      text-align: center;
+      /*text-decoration: underline;*/
+      font-weight: bolder;
+      color: black;
+    }
+
+</style>
+
+    <script>
+        function displayDate() {
+          var currentDate = new Date();
+          var day = getDayName(currentDate.getDay());
+          var month = getMonthName(currentDate.getMonth());
+          var date = currentDate.getDate();
+          var year = currentDate.getFullYear();
+    
+          // Format the date
+          var formattedDate = day + ", " + month + " " + date + ", " + year;
+    
+          // Display the date on the web page
+          document.getElementById("date").textContent = formattedDate;
+        }
+        function getDayName(dayIndex) {
+          var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          return days[dayIndex];
+        }
+        function getMonthName(monthIndex) {
+          var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          return months[monthIndex];
+        }
+    //------------
+          function displayTime() {
+          var currentDate = new Date();
+          var hours = currentDate.getHours();
+          var minutes = currentDate.getMinutes();
+          var seconds = currentDate.getSeconds();
+          // Format the time
+          var formattedTime = formatTime(hours, minutes, seconds);
+          document.getElementById("time").textContent = formattedTime;
+          // Update the clock every second
+          setTimeout(displayTime, 1000);
+        }
+        function formatTime(hours, minutes, seconds) {
+          hours = addLeadingZero(hours);
+          minutes = addLeadingZero(minutes);
+          seconds = addLeadingZero(seconds);
+          return hours + ":" + minutes + ":" + seconds;
+        }
+        function addLeadingZero(number) {
+          if (number < 10) {
+            return "0" + number;
+          }
+          return number;
+        }
+        function fetchPrayerTimes() {
+          fetch('https://api.aladhan.com/v1/timingsByCity?city=cairo&country=egypt&method=1')
+            .then(response => response.json())
+            .then(data => {
+              var prayerTimes = data.data.timings;
+              displayPrayerTimes(prayerTimes);
+            })
+            .catch(error => {
+              console.log('Error fetching prayer times:', error);
+            });
+        }
+        function displayPrayerTimes(prayerTimes) {
+          document.getElementById("fajr").textContent = prayerTimes.Fajr;
+          document.getElementById("dhuhr").textContent = prayerTimes.Dhuhr;
+          document.getElementById("asr").textContent = prayerTimes.Asr;
+          document.getElementById("maghrib").textContent = prayerTimes.Maghrib;
+          document.getElementById("isha").textContent = prayerTimes.Isha;
+        }
+    
+    // JavaScript
+document.getElementById('whatsapp-call-btn').addEventListener('click', function() {
+  var phoneNumber = '1234567890'; // Replace with the desired phone number
+
+  // Open WhatsApp with the specified phone number
+  window.open('https://wa.me/' + phoneNumber);
+});
+    </script> 
+  </head>
+<body onload= "displayDate(); displayTime(); fetchPrayerTimes()" >
+    <div class="grid-container">
+        <div class="grid-item grid-item-1" >
+          <a href="about.html" target="_blank"><i class="fa fa-bell-o"></i><y>&nbsp&nbspعن الموقع &nbsp</y></a>    
+          <a href="https://rassd.net" target="_blank"><i class="fa fa-fw fa-newspaper-o"></i><y>&nbsp&nbspأخبار &nbsp</y></a>    
+            <a  href="mailto:s.refaat@mail.com" class="link"><i class="fa fa-fw fa-envelope"></i><y>&nbsp Mail &nbsp </y></a>
+            <a href="https://chat.whatsapp.com/Bsqdb09KkgnIAabHORAT4i" class="link"><i class="fa fa-whatsapp "></i>&nbsp&nbspWhatsApp Chating</a>
+            <a href="https://wa-me/201019301893" class="link"><i class="fa fa-whatsapp "></i>&nbsp&nbsp&nbspWhatsApp</a>
+        </div>
+        <div class="grid-item grid-item-2">
+            <div class="shadow p-2 badge-primary"><h1>مجتمع الريف اﻷوربي  </h1></div>
+        </div>
+        <div class="grid-item grid-item-3">
+            <div class="date" id="date"></div>
+            <div class="time" id="time"></div>
+            <a  href="view_gallery.html" class="link"> <i class="fa fa-camera-retro"></i><y>&nbsp&nbsp معرض صور &nbsp&nbsp</y></a>
+            <a  href="map-page2.html"><i class="fa fa-search"></i><y>&nbsp الموقع &nbsp</y></a>
+        </div>
+    </div>
+    <hr>
+    <!------------------>
+      <div class="card-group">
+      
+        <div class="card" style="width: 18rem;">
+          <img src="images/Pic25.jpeg" class="card-img-top custom-image" alt="Image">
+          <div class="card">
+              <h2 class="card-title">مزرعه الشيماء</h2>
+          </div>
+          <ul class="list-group list-group-flush">
+            <h4>
+            <li class="list-group-item">زبده فلاحى طبيعى بقرى / جاموسي</li>
+            <li class="list-group-item">عسل نحل طبيعى موالح / حبه البركه</li>
+            <li class="list-group-item">بطاطس تحمير </li>
+            <li class="list-group-item">بصل وثوم ابيض / أحمر</li>
+            <li class="list-group-item"> بازنجان رومى وابيض للحشو</li>
+            <li class="list-group-item"> بصل و  طماطم</li>
+            <a  href="https://wa.me/201125136136" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a>
+              رقم اﻷتصال :01125136136
+          </h4>
+          </ul>
+          <div class="card-body">
+            <a href="farm-shaima.html" class="card-link"  target="_blank">  <i class="fa fa-link "></i> Farm link</a>
+          </div>
+        </div>       
+        <div class="card" style="width: 18rem;">
+          <img src="images/Pic12.jpeg" class="card-img-top" alt="...">
+          <div class="card">
+            <h2 class="card-title">مزرعه الحاجه صابرين</h2>
+          </div>
+          <ul class="list-group list-group-flush">
+            <h4>
+            <li class="list-group-item">فطير مشلتيت</li>
+            <li class="list-group-item">عسل نحل</li>
+            <li class="list-group-item">زيت زيتون</li>
+            <li class="list-group-item">بلح اسود و بلح برحى</li>
+            <li class="list-group-item">جبنه قديمه/قريش/مورته</li>
+            <li class="list-group-item">زبده بلدى جاموسي وبقرى</li>
+            <li class="list-group-item">عيش بلدى</li>
+            <a  href="https://wa.me/201000002485" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a>
+                            رقم اﻷتصال :01000002485</p>
+            </h4>
+          </ul>
+          <div class="card-body">
+            <a href="farm-sabrin.html" class="card-link" target="_blank">
+              <i class="fa fa-link "></i>Farm link</a>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="images/ebiary2.jpeg" class="card-img-top custom-image" alt="Image">
+          <!img src="images/Pic14.jpeg" class="card-img-top" alt="...">
+          <div class="card">
+            <h2 class="card-title">مزرعه اﻷبيارى</h2>
+            <p class="card-text"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+          <h4>
+            <li class="list-group-item">قطعيات لحوم فاخره</li>
+            <li class="list-group-item">وجبات بيتى </li>
+            <li class="list-group-item">منتجات قها</li>
+            <a  href="https://wa.me/201001474050" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a>
+              رقم اﻷتصال :201001474050
+          </h4>
+          </ul>
+          <div class="card-body">
+            <a href="farm-ebiary.html" class="card-link" target="_blank">
+              <i class="fa fa-link "></i>Farm link</a>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="images/bread.jpeg" class="card-img-top<" alt="...">
+          <div class="card">
+            <h2 class="card-title">مزرعه المنتجات الطازجه</h2>
+            <h4 class="card-title">فارم فريش</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <h4>
+            <li class="list-group-item">اطباق دجاج مدبوح طازج</li>
+            <li class="list-group-item">اطباق بط مدبوح طازج</li>
+            <li class="list-group-item"></li>
+            <a  href="https://wa.me/201098875936" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a>
+                رقم اﻷتصال :01098875936
+          </h4>
+          </ul>
+          <div class="card-body">
+             <a href="farm-fresh.html" class="card-link" target="_blank">
+              <i class="fa fa-link "></i>Farm link</a>
+          </div>
+        </div>
+      </div>
+      <hr class="custom-hr">
+         <hr>
+      <div class="card-group">
+        <div class="card" style="width: 18rem;">
+          <img src="images/lemon1.jpeg" class="card-img-top" alt="...">
+          <div class="card">
+            <h2 class="card-title">مزرعه د. نبيل رحيم</h2>
+            <p class="card-text"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+          <h4>
+            <li class="list-group-item">ليمون بلدى</li>
+            <li class="list-group-item">ورق عنب</li></h4>
+            <a  href="https://wa.me/201001551946" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a>
+              رقم اﻷتصال :01001551946
+          </h4>
+          </ul>
+         <div class="card-body">
+            <a href="farm-raheem.html" class="card-link" target="_blank">
+              <i class="fa fa-link"></i>Card link</a>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h2 class="card-title">مزرعه </h2>
+            <p class="card-text">انتاج حيوانى</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <h4>
+            <li class="list-group-item"></li>
+            <li class="list-group-item"></li>
+            <li class="list-group-item"></li>
+          </h4>
+          </ul>
+          <div class="card-body">
+            <a href="https://www.rasd-news.com/ar" class="card-link">Rassd Card link</a>
+          </div>
+        </div>  
+        <div class="card" style="width: 18rem;">
+          <img src="" class="card-img-top" alt="...">
+           <div class="card-body">
+            <h2 class="card-title">مزرعه</h2>
+            <p class="card-text"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <h4>
+            <li class="list-group-item"></li>
+            <li class="list-group-item"> </li>
+            <li class="list-group-item">ا</li>
+          </h4>
+          </ul>
+          <div class="card-body">
+            <a href="" class="card-link">Card link</a>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h2 class="card-title">مزرعه</h2>
+            <h4 class="card-text"></h4>
+          </div>
+          <ul class="list-group list-group-flush">
+          <h4>
+            <li class="list-group-item"></li>
+            <li class="list-group-item"></li>
+            <li class="list-group-item"></li>
+          </h4>
+          </ul>
+          <div class="card-body">
+            <a href="images/Pic12.jpeg" class="card-link">Card link</a>
+          </div>
+        </div>
+      </div>
+      <div>    
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col">
+            <div class="card">
+              <img src="images/sawsan9.jpeg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h2 class="card-title">مزرعه السوسن</h2>
+                <p class="card-text">الموقع بالريف اﻷوربي فيينا - طريق 22</p>
+                <ul class="list-group list-group-flush">
+                  <h4>
+                  <li class="list-group-item">برتقال ابو سره </li>
+                  <li class="list-group-item">بلح زغلول و بلح برحى</li>
+                  <li class="list-group-item">مانجو كيت</li>
+                  <li class="list-group-item">بيض بلدى</li>
+                  <li class="list-group-item">بصل أحمر و أبيض</li>
+                  <li class="list-group-item"> </li>
+                  <a  href="https://wa.me/201006611458" class="link"><i class="fa fa-whatsapp "></i>&nbsp اتصل بنا &nbsp </a><br>
+                  رقم اﻷتصال :201006611458
+                  </h4>     
+                  <div class="card-body">
+                    <a href="farm-sawsan.html" class="card-link"  target="_blank">  <i class="fa fa-link "></i> Farm link</a>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">مزرعه الشاعر لﻷنتاج الحيوانى</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="images/Rifai.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="images/Rifai.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer>
+          &copy; Sherif python Website
+      </footer>
+    </body>
+</html>

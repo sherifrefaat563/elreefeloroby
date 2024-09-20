@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    <style>
+
+body {
+      margin: 0;
+      padding-bottom: 50px; /* Create space at the bottom for the buttons */
+    }
+
+    .button-container {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      background-color: #0b4905;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .gallery {
+        position:relative;
+        image-orientation: flip;
+        }
+      
+    img {
+      max-width: 100%;
+      max-height: auto;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      
+    }/*
+      .photo {
+        display: none;
+        max-width: 100%;
+        height: auto;
+      }
+      
+      .photo.active {
+        display: block;
+      }
+      
+      .navigation {
+        margin-top: 10px;
+      }*/
+    
+      </style>
+    </head>
+<body>
+<!-- Your page content here -->
+<img id="photo" src="/static/images/Pic7.jpeg" alt="Photo">
+
+<div class="button-container">
+  <button id="backwardButton">Backward</button>
+  <button id="forwardButton">Forward</button>
+</div>
+
+<script>
+            var photos = [
+              "images/Pic1.jpg",
+              "images/Pic2.jpg",
+              "images/Pic3.jpg",
+              "images/Pic4.jpg",
+              "images/Pic7.jpeg",
+              "images/Pic8.jpeg",
+              "images/Pic9.jpeg",
+              "images/Pic10.jpeg",
+              "images/Pic11.jpeg",
+              "images/Pic12.jpeg",
+              "images/Pic13.jpeg",
+              "images/Pic14.jpeg",
+              "images/Pic15.jpeg",
+              "images/Pic16.jpeg",
+              "images/Pic17.jpeg",
+              "images/Pic18.jpeg",
+              "images/Pic19.jpeg",
+              "images/Pic20.jpeg",
+              "images/Pic21.jpeg",
+              "images/Pic22.jpeg",
+              "mages/Pic23.jpeg",
+              "images/Pic24.jpeg",
+              "images/Pic25.jpeg",
+              "images/Pic26.jpeg",
+              "images/Pic27.jpeg",
+              "images/Pic18.jpeg",
+              "images/Pic29.jpeg",
+              "images/Pic30.jpeg",
+              "images/Pic31.jpeg",
+              "images/Pic32.jpeg",
+              "images/Pic33.jpeg",
+              "images/Pic34.jpeg",
+              "images/Pic35.jpeg",
+              "images/Pic36.jpeg",
+              "images/Pic37.jpeg",
+
+              // Add more photo paths as needed
+            ];
+        
+            var currentPhotoIndex = 0;
+            var photoElement = document.getElementById("photo");
+            var backwardButton = document.getElementById("backwardButton");
+            var forwardButton = document.getElementById("forwardButton");
+        
+            function showCurrentPhoto() {
+              photoElement.src = photos[currentPhotoIndex];
+            }
+        
+            function navigateForward() {
+              currentPhotoIndex++;
+              if (currentPhotoIndex >= photos.length) {
+                currentPhotoIndex = 0;
+              }
+              showCurrentPhoto();
+            }
+        
+            function navigateBackward() {
+              currentPhotoIndex--;
+              if (currentPhotoIndex < 0) {
+                currentPhotoIndex = photos.length - 1;
+              }
+              showCurrentPhoto();
+            }
+        
+            backwardButton.addEventListener("click", navigateBackward);
+            forwardButton.addEventListener("click", navigateForward);
+        
+            // Show the initial photo
+            showCurrentPhoto();
+    </script>
+</body>
+</html>

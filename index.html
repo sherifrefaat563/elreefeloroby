@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<title> ElReef ElOrobee Community </title>
+<head>
+  <meta charset="UTF-8" />
+
+<link rel="stylesheet" href="http://www.fontstatic.com/f=jazeera,jazeera-light">
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/amiri.css";>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/droidarabickufi.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/thabit.css">
+
+<style>
+@import url("http://www.fontstatic.com/f=jazeera,jazeera-light");
+
+.image-container {
+        display: flex;
+        }
+    .image-frame {
+        flex:1;
+        display:inline;
+        justify-content:space-evenly;
+        }
+    .image-frame img {
+        display:inline-flex ;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        overflow: hidden;
+        }
+    .image-container {
+        object-fit: contain;
+        object-position: center;
+    }
+    img{
+        width: 100%;
+        height:auto;
+        align-items: center;
+      }
+/* -----------------------------------------------*/
+    .grid{
+            display: contents;
+            display: grid;
+            grid-gap: 10px;
+           
+        }
+ 
+    .grid-item-1 {
+            grid-column: 1;
+            width: 100%;
+            font-size:medium;
+            padding: 5px;
+            text-align: left;
+    }
+
+    .grid-item-2 {
+            grid-column: 2;
+            width:100%;
+            /*background-color: darkmagenta; */             
+    }
+    .grid-item-3 {
+            grid-column: 3;
+            width:100%;
+            direction:rtl;
+         /*  align-items: left; */
+
+    }
+    .grid-container {
+            display: grid;
+            /*grid-template-columns: 1fr 2fr 1fr; /* Adjust the number of columns as needed */
+            grid-gap: 3px; /* Adjust the gap between grid items as needed */
+            }
+   .grid-item {
+            display: flex;
+            flex-direction: column; 
+            text-align: center;
+            /*color: rgba(5, 48, 15, 0.84);
+            margin-right: 20px;*/
+            margin-top:20px;
+            border: .2px silver red;  
+            padding:20px;
+            
+        }
+    .grid-1 {
+            display:grid;
+            grid-template-columns: repeat(4, 1fr); /* Adjust the nber of columns as needed */
+            grid-gap: 0%; /* Adjust the gap between grid items */
+            }
+
+    h1, h2{
+        font-style:normal;
+        text-align: center;
+        font-weight:bolder;
+        color:gold;
+        font-family: 'thabit';
+        /*font-family: 'droidarabickufi';*/
+                
+        /*font-family:'Amiri', serif;*/
+        /*font-family: 'jazeera';*/
+        /*font-family: 'jazeera-light';*/
+      } 
+    h3{
+        text-decoration: underline;
+        font-family: 'Amiri', serif;
+    }            
+    p, h5{
+      font-family: 'Amiri', serif;
+    }
+     .date{
+        background-color:darkmagenta ;
+        color: white;
+    }
+    .time{
+        /*background-color: crimson;*/
+        color: darkgreen;
+        font-weight: bolder;
+    }
+    th{
+        background-color:darkgreen;
+        color:antiquewhite
+    }
+    .prayer-time {
+      font-family: "Courier New", monospace;
+      font-size: 20px;
+      direction:rtl    ;
+      color: blue;
+    }
+    y{
+        color:blue;
+        background-color:;
+        font-size: large;
+        /*font-family: 'Amiri', serif;*/
+        font-family: 'jazeera-light';
+      }
+  
+</style>
+<script>
+    function displayDate() {
+      var currentDate = new Date();
+      var day = getDayName(currentDate.getDay());
+      var month = getMonthName(currentDate.getMonth());
+      var date = currentDate.getDate();
+      var year = currentDate.getFullYear();
+
+      // Format the date
+      var formattedDate = day + ", " + month + " " + date + ", " + year;
+
+      // Display the date on the web page
+      document.getElementById("date").textContent = formattedDate;
+    }
+    function getDayName(dayIndex) {
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return days[dayIndex];
+    }
+    function getMonthName(monthIndex) {
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      return months[monthIndex];
+    }
+//------------
+      function displayTime() {
+      var currentDate = new Date();
+      var hours = currentDate.getHours();
+      var minutes = currentDate.getMinutes();
+      var seconds = currentDate.getSeconds();
+      // Format the time
+      var formattedTime = formatTime(hours, minutes, seconds);
+      document.getElementById("time").textContent = formattedTime;
+      // Update the clock every second
+      setTimeout(displayTime, 1000);
+    }
+    function formatTime(hours, minutes, seconds) {
+      hours = addLeadingZero(hours);
+      minutes = addLeadingZero(minutes);
+      seconds = addLeadingZero(seconds);
+      return hours + ":" + minutes + ":" + seconds;
+    }
+    function addLeadingZero(number) {
+      if (number < 10) {
+        return "0" + number;
+      }
+      return number;
+    }
+    function fetchPrayerTimes() {
+      fetch('https://api.aladhan.com/v1/timingsByCity?city=cairo&country=egypt&method=1')
+        .then(response => response.json())
+        .then(data => {
+          var prayerTimes = data.data.timings;
+          displayPrayerTimes(prayerTimes);
+        })
+        .catch(error => {
+          console.log('Error fetching prayer times:', error);
+        });
+    }
+    function displayPrayerTimes(prayerTimes) {
+      document.getElementById("fajr").textContent = prayerTimes.Fajr;
+      document.getElementById("dhuhr").textContent = prayerTimes.Dhuhr;
+      document.getElementById("asr").textContent = prayerTimes.Asr;
+      document.getElementById("maghrib").textContent = prayerTimes.Maghrib;
+      document.getElementById("isha").textContent = prayerTimes.Isha;
+    }
+</script> 
+<!link rel="stylesheet" href="http://www.fontstatic.com/f=jazeera,jazeera-light">
+<!link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/amiri.css";>
+<!link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body onload= "displayDate(); displayTime(); fetchPrayerTimes()" >
+    <div class="grid-container">
+        <div class="grid-item grid-item-1" >
+          <a href="about.html" target="_blank"><i class="fa fa-bell-o"></i><y>&nbsp&nbspعن الموقع &nbsp</y></a>    
+          <a href="https://rassd.net" target="_blank"><i class="fa fa-fw fa-newspaper-o"></i><y>&nbsp&nbspأخبار &nbsp</y></a>    
+            <a  href="mailto:s.refaat@mail.com" class="link"><i class="fa fa-fw fa-envelope"></i><y>&nbsp Mail &nbsp </y></a>
+            <a href="https://chat.whatsapp.com/Bsqdb09KkgnIAabHORAT4i" class="link">
+              <i class="fa fa-whatsapp "></i>&nbsp&nbspWhatsApp Chating</a>
+            <a href="https://wa-me/201019301893" class="link"><i class="fa fa-whatsapp "></i>&nbsp&nbsp&nbspWhatsApp</a>
+        </div>
+        <div class="grid-item grid-item-2">
+            <div class="shadow p-2 badge-primary"><h1>مجتمع الريف اﻷوربي  </h1></div>
+        </div>
+        <div class="grid-item grid-item-3">
+            <div class="date" id="date"></div>
+            <div class="time" id="time"></div>
+            <a  href="view_gallery.html" class="link"> 
+              <i class="fa fa-camera-retro"></i><y>&nbsp&nbsp معرض صور &nbsp&nbsp</y></a>
+            <a  href="map-page2.html"><i class="fa fa-search"></i><y>&nbsp الموقع &nbsp</y></a>
+        </div>
+    </div>
+    <hr>
+    <!------------------>
+    <div class="grid-1">
+        <div class="grid-item"><y>جامع الرفاعى</y>
+            <div class="col">
+                <div class="image-container">
+                    <div class="image-frame">
+                        <img src="images/Rifai.jpg" alt="Image Description">
+                        <a  href="images/Rifai.jpg" target="_blank">View</a>" 
+                    </div>
+                </div>        
+            </div>
+        </div>
+        <div class="grid-item"><y>الجامع اﻷزرق</y>
+            <div class="col">
+                <div class="image-container">
+                    <div class="image-frame">
+                        <img src="images/Blue-mosque.jpg" alt="Image Description">
+                        <a  href="images/Blue-mosque.jpg" target="_blank">View</a>" 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item"><y>أيه صوفيا</y>
+            <div class="col">
+                <div class="image-container">
+                    <div class="image-frame">
+                        <img src="images/Hagia-Sophia.jpeg" alt="Image Description">
+                        <a  href="images/Hagia-Sophia.jpeg" target="_blank">View</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item"><y>السلطان حسن</y>
+            <div class="col">
+                <div class="image-container">
+                    <div class="image-frame">
+                        <img src="images/old.jpeg" alt="Image Description">
+                        <a  href="images/old.jpeg" target="_blank">View</a>" <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+        <!-- Add more grid items as needed -->
+    <hr>       
+
+        <div class="grid">
+            <div class="grid-item grid-item-1" >
+                <div class="card" style="width: 18rem;">
+                    <img src="images/clinic.jpeg"  class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><y>العياده الطبيه</y></h5>
+                        <p class="card-text">
+                                    مواعيد العمل 
+                                    الساعه  09:00 صباحا    -  الساعه 7:00 مساء
+                                    ارقام اﻷتصال: 
+                                    رقم #1
+                                    رقم #2
+                                    مسئول اﻷستقبال :
+                                    السيد: دكتور  س 
+                            .</p>
+                        <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="images/pharmacy.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><y>الصيدليه</y></h5>
+                            <p class="card-text">الصيدليه : >
+                                مواعيد العمل :
+                                الساعه  09:00 صباحا    -  الساعه 10:00 مساء
+                                ارقام اﻷتصال: 
+                                رقم #1
+                                رقم #2
+                                مسئول اﻷستقبال :
+                                السيد: دكتور  س 
+                            </p>
+                        <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="images/restaurnt1.jpeg" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <h5 class="card-title">مطعم أبومازن</h5>
+                      <p class="card-text"></p>
+                      <a href="
+                      https://lm.facebook.com/l.php?u=https%3A%2F%2Fmaps.app.goo.gl%2FQNjnEExGxPj4fbZi8%3Ffbclid%3DIwAR0SCgGneN8-f0sbZfmg6JI_0sDRJp8FmnnvOR_zMFcbQRwAHA3iUKyKbg0&h=AT3QIgxSyAm6ZgOOFRVwoiVncQiCyNRGFub49vSIE89cLYYQ7phP23MaFM4lFtiNOlBCdZ4bxFh3623R0gUJr-QAwtwygAvwcMoIzJ3UR9emBxU0mhkqVkrxcGSltfD0G78w8tXnW_w5Lts">الموقع</a>
+                    </div>
+                </div>	
+                <div class="card" style="width: 18rem;">
+                    <img src="images/mechanic.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">
+                        Vehicle repair shop
+                        10+ years in business
+                        Closed ⋅ Opens 09am Fri
+                        Zeitoun
+                        011 23111609.</p>
+                      <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                
+            </div>
+        <div class="grid-item grid-item-2">
+                <img src="https://habibacommunity.com/wp-content/uploads/2021/12/Habiba-Camp-Farm-5-1024x682.jpg">
+                <!img src="https://organicabiotech.com/wp-content/uploads/2019/08/agriculture-001.jpg" >
+                <hr>
+                <img src="images/entr2.jpeg">
+                <hr>
+                <img src="images/entr4.jpeg">
+                <hr>
+                <img src="images/Pic7.jpeg">
+                
+        </div>
+        <div class="grid-item grid-item-3">
+            <div class="card" style="width: 18rem;">
+                <table>
+                    <tr>
+                      <th>الصلاه</th>
+                      <th>وقت</th>
+                    </tr>
+                    <tr>
+                      <td>الفجر</td>
+                      <td class="prayer-time" id="fajr"></td>
+                    </tr>
+                    <tr>
+                      <td>الظهر</td>
+                      <td class="prayer-time" id="dhuhr"></td>
+                    </tr>
+                    <tr>
+                      <td>العصر</td>
+                      <td class="prayer-time" id="asr"></td>
+                    </tr>
+                    <tr>
+                      <td>المغرب</td>
+                      <td class="prayer-time" id="maghrib"></td>
+                    </tr>
+                    <tr>
+                      <td>العشاء</td>
+                      <td class="prayer-time" id="isha"></td>
+                    </tr>
+                  </table>   
+            </div>
+            <div class="card" style="width: 18rem;">
+                    <img src="images/Pic23.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">معرض منتجات الريف اﻷوربى
+                        القاعه الصيفيه - مدخل الريف اﻷوربي
+                        </h5>
+                      <p class="card-text"></p>
+                      <a href="page-farms.html" class="btn btn-primary" target="_blank ">عرض المنتجات</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="images/cook-house.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">خدمات عامه - مطعم</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">محل تجاري - مخبز</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title"> خدمات  سيارات</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">خدمات عامه - كهربائى</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">عرض المزيد</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="images/tree1.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">مزارع الريف</h5>
+                      <p class="card-text">مزرعه النور<br>
+                      <a href="page-farms.html" class="btn btn-primary" target="_blank ">عرض المنتجات</a>
+                    </div>
+                </div>
+            </div>
+            <a href="https://rassd.net/" ></a>
+             <!-- Add more grid items as needed -->
+        </div>
+        <footer>
+          &copy; Sherif python Website
+      </footer>
+  
+    </body>
+ </html> 
